@@ -1,0 +1,32 @@
+# OCaml and Dune
+_*.o
+_*.c
+_*.ml
+_*.mli
+# dune
+# dune-project
+_build/
+_install/
+_build-*/
+
+# Editor-specific files
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Compiled binaries
+*.exe
+*.native
+
+# Dependency directories
+_opam/
+opam-switch
+
+# Documentation
+doc/
+
+# Build artifacts
+*.install
+*.install.log
+*.install.ocaml
+*.install.ocaml.lock
