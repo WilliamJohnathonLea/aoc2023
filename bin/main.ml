@@ -8,6 +8,6 @@ let rec get_lines strings =
 
 let () =
   let lines = get_lines [] in
-  let nums = List.map digits_from_line lines in
-  let totoal = List.fold_left Int.add 0 nums in
-  print_endline @@ string_of_int totoal
+  let nums = List.map digits_from_line_pt2 lines in
+  let total = List.fold_left Int.add 0 nums in
+  print_endline @@ string_of_int total

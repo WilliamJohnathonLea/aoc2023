@@ -13,7 +13,7 @@ let test_first_and_last_empty () =
   Alcotest.(check (list int)) "should be empty" [] (first_and_last_digit [])
 
 let test_first_and_last_one_elem () =
-  Alcotest.(check (list int)) "should have one elem" [1; 1] (first_and_last_digit [1])
+  Alcotest.(check (list int)) "should have two elems" [1; 1] (first_and_last_digit [1])
 
 let test_first_and_last_two_elems () =
   Alcotest.(check (list int)) "should have two elems" [1; 2] (first_and_last_digit [1; 2])
@@ -21,11 +21,16 @@ let test_first_and_last_two_elems () =
 let test_first_and_last_three_elems () =
   Alcotest.(check (list int)) "should have two elems" [1; 3] (first_and_last_digit [1; 2; 3])
 
+let test_replace_word () =
+  Alcotest.(check string) "string should be '21nine'" "21nine" (replace_word "two1nine" "two" "2")
+
 let day_one_set = [
   "'1' is a digit", `Quick, test_is_digit_char_one;
   "'a' is not a digit", `Quick, test_is_digit_char_a;
   "first_and_last on empty list", `Quick, test_first_and_last_empty;
   "first_and_last with a one element", `Quick, test_first_and_last_one_elem;
   "first_and_last with two elements", `Quick, test_first_and_last_two_elems;
-  "first_and_last with three elements", `Quick, test_first_and_last_three_elems
+  "first_and_last with three elements", `Quick, test_first_and_last_three_elems;
+  "get digits '12' from line '1abc2'", `Quick, test_digits_from_line;
+  "replace a word in a string", `Quick, test_replace_word
 ]
