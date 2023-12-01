@@ -1,5 +1,7 @@
 open Aoc2023.Myadd
 
+open Test_dayone
+
 let test_add_positives () =
   Alcotest.(check int) "should be 3" 3 (add 1 2)
 
@@ -17,5 +19,6 @@ let test_set = [
 
 let () =
   Alcotest.run "test_add" [
-    "add", test_set
+    "add", test_set;
+    "day 1", day_one_set
   ]
