@@ -15,14 +15,18 @@ let rec get_lines strings ch =
 let () =
   let config_hand = {red=12; green=13; blue=14} in
   let lines = get_lines [] (lines_from_file file) in
+  let games = List.map (parse_game) lines in
+  let possible_games = List.filter (game_possible config_hand) games in
   let nums = List.map (
-    fun l ->
-      let game = parse_game l in
-      if game_possible config_hand game then
-        game.id
-      else 0
-  ) lines in
+    fun game -> game.id
+  ) possible_games in
+  let powers = List.map (
+    fun game -> power_of_hand @@ max_of_all_colours game.hands
+  ) games in
 
-  let total = List.fold_left (+) 0 nums in
-  print_endline "result total";
-  print_endline @@ string_of_int total
+  let total_ids = List.fold_left (+) 0 nums in
+  let total_powers = List.fold_left (+) 0 powers in
+  print_endline "id total";
+  print_endline @@ string_of_int total_ids;
+  print_endline "power total";
+  print_endline @@ string_of_int total_powers;

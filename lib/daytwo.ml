@@ -43,9 +43,42 @@ let parse_game line =
   let hands = List.map hands_unparsed ~f:parse_hand in
   {id=id; hands=hands}
 
+let hand_possible config_hand hand =
+  (hand.red <= config_hand.red) &&
+  (hand.green <= config_hand.green) &&
+  (hand.blue <= config_hand.blue)
+
 let game_possible config_hand game =
-  let hand_possible config_hand hand =
-    (hand.red <= config_hand.red) &&
-    (hand.green <= config_hand.green) &&
-    (hand.blue <= config_hand.blue)
-  in List.for_all game.hands ~f:(hand_possible config_hand)
+  List.for_all game.hands ~f:(hand_possible config_hand)
+
+let power_of_hand hand =
+  let red = if hand.red <= 0 then 1 else hand.red in
+  let green = if hand.green <= 0 then 1 else hand.green in
+  let blue = if hand.blue <= 0 then 1 else hand.blue in
+  red * green * blue
+
+let max_of_all_colours hand =
+  let non_zero i = i > 0 in
+  let reds =
+    List.filter
+    (List.map hand ~f:(fun h -> h.red))
+    ~f:non_zero
+  in
+  let greens =
+    List.filter
+    (List.map hand ~f:(fun h -> h.green))
+    ~f:non_zero
+  in
+  let blues =
+    List.filter
+    (List.map hand ~f:(fun h -> h.blue))
+    ~f:non_zero
+  in
+  let r_min = List.max_elt reds ~compare:(Int.compare) in
+  let g_min = List.max_elt greens ~compare:(Int.compare) in
+  let b_min = List.max_elt blues ~compare:(Int.compare) in
+  {
+    red=Option.value ~default:1 r_min;
+    green=Option.value ~default:1 g_min;
+    blue=Option.value ~default:1 b_min
+  }

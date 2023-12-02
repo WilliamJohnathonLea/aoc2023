@@ -61,6 +61,19 @@ let test_game_not_possible () =
   let input = game_possible config {id=1;hands=[{red=1;green=6;blue=5}]} in
   Alcotest.(check bool) "should be true" false input
 
+let test_power_of_hand_two_zeros () =
+  let input = power_of_hand {red=0;green=0;blue=1} in
+  Alcotest.(check int) "should be 1" 1 input
+
+let test_part_two () =
+  let game = parse_game "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green" in
+  let min = max_of_all_colours game.hands in
+  print_endline @@ "red " ^ (string_of_int min.red);
+  print_endline @@ "green " ^ (string_of_int min.green);
+  print_endline @@ "blue " ^ (string_of_int min.blue);
+  let power = power_of_hand min in
+  Alcotest.(check int) "should be 48" 48 power
+
 let day_two_set = [
   "parse a game with ID 1 and no hands", `Quick, test_parse_game_no_hands;
   "parse a game with ID 1 and one hand", `Quick, test_parse_game_one_hand;
@@ -70,4 +83,6 @@ let day_two_set = [
   "parse a hand with red, blue and green cubes", `Quick, test_parse_hand_reds_blues_greens;
   "a game is possible", `Quick, test_game_is_possible;
   "a game is not possible", `Quick, test_game_not_possible;
+  "power of hand with one colour", `Quick, test_power_of_hand_two_zeros;
+  "game minimum hand power", `Quick, test_part_two;
 ]
