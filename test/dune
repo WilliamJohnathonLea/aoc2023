@@ -1,4 +1,4 @@
 (test
  (name test_main)
  (libraries alcotest aoc2023)
- (modules test_main test_dayone))
+ (modules test_main test_dayone test_daytwo))

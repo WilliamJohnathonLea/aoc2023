@@ -1,24 +1,8 @@
-open Aoc2023.Myadd
-
 open Test_dayone
-
-let test_add_positives () =
-  Alcotest.(check int) "should be 3" 3 (add 1 2)
-
-let test_add_negatives () =
-  Alcotest.(check int) "should be -3" (-3) (add (-1) (-2))
-
-let test_add_pos_and_neg () =
-  Alcotest.(check int) "should be -1" (-1) (add 1 (-2))
-
-let test_set = [
-  "add positives" ,`Quick, test_add_positives;
-  "add negatives", `Quick, test_add_negatives;
-  "add postive and negative", `Quick, test_add_pos_and_neg;
-]
+open Test_daytwo
 
 let () =
-  Alcotest.run "test_add" [
-    "add", test_set;
-    "day 1", day_one_set
+  Alcotest.run "test_aoc2023" [
+    "day 1", day_one_set;
+    "day 2", day_two_set;
   ]
