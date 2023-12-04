@@ -5,4 +5,5 @@
   test_main
   test_dayone
   test_daytwo
-  test_daythree))
+  test_daythree
+  test_dayfour))
