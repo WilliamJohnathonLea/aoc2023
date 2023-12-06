@@ -34,4 +34,7 @@ let part_one lines =
   let winners = List.map cards ~f:filter_winners in
   sum @@ List.map winners ~f:to_points
 
-let part_two _ = 0
+let part_two lines =
+  let cards = List.map lines ~f:parse_card in
+  let _ = List.map cards ~f:filter_winners in
+  0

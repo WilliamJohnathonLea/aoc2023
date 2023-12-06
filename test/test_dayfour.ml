@@ -26,17 +26,18 @@ let test_filter_winners () =
   Alcotest.(check (list int)) "should be [83; 86; 17; 48]" expected (filter_winners input)
 
 let test_to_points () =
-  let input = [83; 86; 17; 48] in
-  let expected = 8 in
-  Alcotest.(check int) "test" expected (to_points input)
+  Alcotest.(check int) "should be 8" 8 (to_points [83; 86; 17; 48])
 
 let test_part_one () =
-  Alcotest.(check int) "test" 13 (part_one test_lines)
+  Alcotest.(check int) "should be 13" 13 (part_one test_lines)
 
+let test_part_two () =
+  Alcotest.(check int) "should be 30" 30 (part_two test_lines)
 
 let day_four_set = [
   "test parsing a card", `Quick, test_parse_card;
   "test filtering the winning numbers on a card", `Quick, test_filter_winners;
   "test converting winners to points", `Quick, test_to_points;
   "test part one", `Quick, test_part_one;
+  "test part two", `Quick, test_part_two;
 ]

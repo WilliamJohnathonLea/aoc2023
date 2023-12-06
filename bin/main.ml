@@ -13,4 +13,7 @@ let rec get_lines strings ch =
 
 let () =
   let lines = get_lines [] (lines_from_file file) in
-  print_endline @@ string_of_int @@ part_one lines
+  print_endline "part one";
+  print_endline @@ string_of_int @@ part_one lines;
+  print_endline "part two";
+  print_endline @@ string_of_int @@ part_two lines;
