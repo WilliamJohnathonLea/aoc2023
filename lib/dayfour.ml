@@ -21,6 +21,9 @@ let filter_winners card =
     fun n -> List.exists card.winners ~f:(fun w -> n = w)
   )
 
+let count_winners card =
+  List.length @@ filter_winners card
+
 let to_points winners =
   match winners with
   | [] -> 0
@@ -28,13 +31,17 @@ let to_points winners =
   | _ :: tail ->
     List.fold_left (List.map tail ~f:(fun _ -> 2)) ~init:1 ~f:( * )
 
+let sum nums = List.fold_left nums ~init:0 ~f:(+)
+
 let part_one lines =
-  let sum nums = List.fold_left nums ~init:0 ~f:(+) in
   let cards = List.map lines ~f:parse_card in
   let winners = List.map cards ~f:filter_winners in
   sum @@ List.map winners ~f:to_points
 
 let part_two lines =
   let cards = List.map lines ~f:parse_card in
-  let _ = List.map cards ~f:filter_winners in
+  let winner_counts = List.map cards ~f:count_winners in
+  List.iter2_exn lines winner_counts ~f:(
+    fun x y -> print_endline @@ (Printf.sprintf "Card %s -  winners: %d" x y)
+  );
   0
