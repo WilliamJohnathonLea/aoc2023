@@ -1,6 +1,6 @@
-open Aoc2023.Dayfour
+open Aoc2023.Dayseven
 
-let file = "dayfour.txt"
+let file = "dayseven_test.txt"
 
 let lines_from_file file =
   open_in file
