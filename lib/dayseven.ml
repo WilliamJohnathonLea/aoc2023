@@ -18,7 +18,7 @@ type card =
   | Two
 [@@deriving ord, eq, show]
 
-type hand = card list [@@deriving show]
+type hand = card list [@@deriving show, ord]
 
 type hand_and_bid = hand * int [@@deriving show]
 
@@ -101,25 +101,36 @@ let kind_of_hand hand =
   let three_of = three_of_kind grouped in
   let two_pairs = two_pairs grouped in
   let one_pair = one_pair grouped in
-  or_else five_of @@
-  or_else four_of @@
-  or_else full_house @@
-  or_else three_of @@
-  or_else two_pairs @@
-  or_else one_pair (Some High_card)
+  Option.value (
+    or_else five_of @@
+    or_else four_of @@
+    or_else full_house @@
+    or_else three_of @@
+    or_else two_pairs one_pair
+  ) ~default:High_card
+
+let compare_hand_by_kind h1 h2 =
+  match compare_kind (kind_of_hand h1) (kind_of_hand h2) with
+  | 0 -> compare_hand h1 h2
+  | x -> x
 
 let part_one lines =
-  let hands_and_bids = List.map lines ~f:(fun l ->
+  let hands_and_bids = List.map lines ~f:( fun l ->
     let split = String.split l ~on:' ' in
     let hand = hand_of_string @@ List.hd_exn split in
     let bid = int_of_string @@ List.last_exn split in
     hand, bid
   ) in
-  List.iter hands_and_bids ~f:( fun (hand, _) ->
-    match kind_of_hand hand with
-    | Some k -> print_endline ((show_hand hand) ^ " " ^ (show_kind k))
-    | None -> print_endline "no kind in hand"
-  );
-  0
+
+  (* Reverse list to take advantage of mapi *)
+  let xs = List.rev @@ List.sort hands_and_bids ~compare:( fun (a,_) (b,_) ->
+    compare_hand_by_kind a b
+  ) in
+
+  let ws = List.mapi xs ~f:( fun idx x ->
+    snd x * (idx + 1)
+  ) in
+
+  List.fold_left ws ~init:0 ~f:(+)
 
 let part_two _ = 0
